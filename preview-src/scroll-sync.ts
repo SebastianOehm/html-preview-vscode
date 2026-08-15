@@ -24,13 +24,12 @@ const getCodeLineElements = (() => {
 	let elements: CodeLineElement[];
 	return () => {
 		if (!elements) {
-			elements = Array.prototype.map.call(
-				document.getElementsByClassName('code-line'),
-				(element: any) => {
-					const line = +element.getAttribute('data-line');
-					return { element, line };
+			elements = Array.from(document.getElementsByClassName('code-line'))
+				.map((element): CodeLineElement => {
+					const line = +element.getAttribute('data-line')!;
+					return { element: element as HTMLElement, line };
 				})
-				.filter((x: any) => !isNaN(x.line));
+				.filter(x => !isNaN(x.line));
 		}
 		return elements;
 	};
