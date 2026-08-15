@@ -220,6 +220,15 @@
 					"default": "off",
 					"description": "%html.trace.desc%",
 					"scope": "window"
+				},
+				"html.styles": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"description": "%html.styles.desc%",
+					"scope": "resource"
 				}
 			}
 		}
