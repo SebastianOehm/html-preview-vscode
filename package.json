@@ -2,7 +2,7 @@
 	"name": "html-preview-vscode",
 	"displayName": "%displayName%",
 	"description": "%description%",
-	"version": "0.2.8",
+	"version": "0.2.10",
 	"publisher": "SebastianOehm",
 	"author": "Sebastian Oehm",
 	"license": "MIT",
@@ -230,6 +230,7 @@
 		"build-ext": "npx tsc -p ./tsconfig.json",
 		"build-preview": "webpack-cli",
 		"watch": "npx tsc -watch -p ./tsconfig.json",
+		"lint": "eslint .",
 		"test": "npm run compile && vscode-test",
 		"preversion": "npm run compile",
 		"version": "./node_modules/.bin/changes",
@@ -241,6 +242,7 @@
 		"vscode-nls": "3.2.4"
 	},
 	"devDependencies": {
+		"@eslint/js": "^10.0.1",
 		"@studio/changes": "1.7.0",
 		"@types/lodash.throttle": "4.1.4",
 		"@types/mocha": "2.2.42",
@@ -248,10 +250,11 @@
 		"@types/vscode": "^1.38.0",
 		"@vscode/test-cli": "^0.0.15",
 		"@vscode/test-electron": "^3.1.0",
+		"eslint": "^10.8.1",
 		"ts-loader": "^9.6.2",
 		"tslib": "^1.9.3",
-		"tslint": "5.8.0",
 		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.67.0",
 		"webpack": "^5.109.2",
 		"webpack-cli": "^7.2.2"
 	}

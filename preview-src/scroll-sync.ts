@@ -90,7 +90,7 @@ export function getLineElementsAtPageOffset(offset: number): { previous: CodeLin
 export function scrollToRevealSourceLine(line: number) {
 	const { previous, next } = getElementsForSourceLine(line);
 	if (previous && getSettings().scrollPreviewWithEditor) {
-		let scrollTo = 0;
+		let scrollTo: number;
 		const rect = previous.element.getBoundingClientRect();
 		const previousTop = rect.top;
 		if (next && next.line !== previous.line) {
