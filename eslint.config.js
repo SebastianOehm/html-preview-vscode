@@ -30,6 +30,11 @@ module.exports = tseslint.config(
 				module: 'writable',
 				__dirname: 'readonly'
 			}
+		},
+		rules: {
+			// These are plain CommonJS files run directly by Node, not compiled -
+			// require() here is normal, not a pattern to flag.
+			'@typescript-eslint/no-require-imports': 'off'
 		}
 	}
 );
