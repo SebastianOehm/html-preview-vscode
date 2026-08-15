@@ -1,5 +1,11 @@
 # Changes
 
+## 0.2.11
+
+- Bundle the extension host (`src/extension.ts`) with webpack instead of shipping raw `tsc` output plus its full `node_modules` dependency tree
+- Stop shipping `preview-src/**` raw source (already bundled into `media/*.js`, same as before)
+- Packaged `.vsix` shrinks from 907 files / 1.74 MB to 19 files / 513 KB
+
 ## 0.2.10
 
 - Fix a one-line-off error in scroll-sync, click-to-jump, and active-line highlighting: preview line markers were generated 1-indexed (`data-line`) while every consumer (VS Code's Position/Range/lineAt APIs) expects 0-indexed line numbers
