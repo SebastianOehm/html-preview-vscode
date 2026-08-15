@@ -12,18 +12,7 @@ import { HTMLPreviewConfigurationManager } from '../features/previewConfig';
 import { ExtensionContentSecurityPolicyArbiter } from '../security';
 import { Logger } from '../logger';
 import { InMemoryDocument } from './inMemoryDocument';
-
-function makeMemento(): vscode.Memento {
-	const store = new Map<string, unknown>();
-	return {
-		keys: () => [...store.keys()],
-		get: (key: string, defaultValue?: unknown) => store.has(key) ? store.get(key) : defaultValue,
-		update: (key: string, value: unknown) => {
-			store.set(key, value);
-			return Promise.resolve();
-		}
-	} as vscode.Memento;
-}
+import { makeMemento } from './testUtils';
 
 describe('HTMLContentProvider.provideTextDocumentContent', () => {
 	const panel = vscode.window.createWebviewPanel('test.preview', 'Test Preview', vscode.ViewColumn.Active);
