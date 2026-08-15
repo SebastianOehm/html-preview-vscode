@@ -1,5 +1,10 @@
 # Changes
 
+## 0.2.12
+
+- Add first real test coverage: a fast unit-test lane (mocha + ts-node, no VS Code instance needed) for the scroll-sync line-matching logic, and an integration test confirming the extension activates and registers every command declared in `package.json`
+- `npm test` now runs both lanes; no CI changes needed since it already just calls `npm test`
+
 ## 0.2.11
 
 - Bundle the extension host (`src/extension.ts`) with webpack instead of shipping raw `tsc` output plus its full `node_modules` dependency tree
