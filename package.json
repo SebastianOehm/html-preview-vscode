@@ -2,7 +2,7 @@
 	"name": "html-preview-vscode",
 	"displayName": "%displayName%",
 	"description": "%description%",
-	"version": "0.2.6",
+	"version": "0.2.7",
 	"publisher": "SebastianOehm",
 	"author": "Sebastian Oehm",
 	"license": "MIT",
@@ -20,7 +20,7 @@
 	"icon": "icon.png",
 	"main": "./out/extension.js",
 	"engines": {
-		"vscode": "^1.26.0"
+		"vscode": "^1.38.0"
 	},
 	"categories": [
 		"Programming Languages"
@@ -246,7 +246,7 @@
 		"@types/lodash.throttle": "4.1.4",
 		"@types/mocha": "2.2.42",
 		"@types/node": "^26.2.0",
-		"@types/vscode": "^1.26.0",
+		"@types/vscode": "^1.38.0",
 		"@vscode/test-cli": "^0.0.15",
 		"@vscode/test-electron": "^3.1.0",
 		"ts-loader": "^9.6.2",
