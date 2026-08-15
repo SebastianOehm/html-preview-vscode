@@ -1,5 +1,10 @@
 # Changes
 
+## 0.2.8
+
+- Bump cheerio from a 2018 pre-release (1.0.0-rc.2) to 1.2.0, closing the last high-severity npm audit finding in a shipped runtime dependency
+- Drop the now-redundant `@types/cheerio` devDependency (cheerio ships its own types since 1.0)
+
 ## 0.2.7
 
 - Migrate webviews from the legacy `vscode-resource:` URI scheme to `webview.asWebviewUri()` and `webview.cspSource`
