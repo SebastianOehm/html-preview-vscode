@@ -2,7 +2,7 @@
 	"name": "html-preview-vscode",
 	"displayName": "%displayName%",
 	"description": "%description%",
-	"version": "0.2.9",
+	"version": "0.2.10",
 	"publisher": "SebastianOehm",
 	"author": "Sebastian Oehm",
 	"license": "MIT",

@@ -1,5 +1,9 @@
 # Changes
 
+## 0.2.10
+
+- Fix a one-line-off error in scroll-sync, click-to-jump, and active-line highlighting: preview line markers were generated 1-indexed (`data-line`) while every consumer (VS Code's Position/Range/lineAt APIs) expects 0-indexed line numbers
+
 ## 0.2.9
 
 - Replace tslint (archived by its maintainers in 2019) with ESLint + typescript-eslint, wired into CI

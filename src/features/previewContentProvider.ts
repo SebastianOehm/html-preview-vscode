@@ -75,8 +75,8 @@ export class HTMLContentProvider {
 				match: string, p1: string, p2: string, p3: string, 
 				p4: string, p5: string, p6: string, _offset: number) =>
 			typeof p5 !== "string" ? 
-			`<${p1} class="code-line" data-line="${i+1}" ${p2}` :
-			`<${p1} ${p3} class="${p5} code-line" data-line="${i+1}" ${p6}`)
+			`<${p1} class="code-line" data-line="${i}" ${p2}` :
+			`<${p1} ${p3} class="${p5} code-line" data-line="${i}" ${p6}`)
         ).join("\n");
         const $ = cheerio.load(parsedDoc);
 		$("head").prepend(`<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
