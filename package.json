@@ -2,7 +2,7 @@
 	"name": "html-preview-vscode",
 	"displayName": "%displayName%",
 	"description": "%description%",
-	"version": "0.2.7",
+	"version": "0.2.8",
 	"publisher": "SebastianOehm",
 	"author": "Sebastian Oehm",
 	"license": "MIT",
@@ -236,13 +236,12 @@
 		"postversion": "git push --follow-tags"
 	},
 	"dependencies": {
-		"cheerio": "1.0.0-rc.2",
+		"cheerio": "^1.2.0",
 		"lodash.throttle": "4.1.1",
 		"vscode-nls": "3.2.4"
 	},
 	"devDependencies": {
 		"@studio/changes": "1.7.0",
-		"@types/cheerio": "0.22.9",
 		"@types/lodash.throttle": "4.1.4",
 		"@types/mocha": "2.2.42",
 		"@types/node": "^26.2.0",
