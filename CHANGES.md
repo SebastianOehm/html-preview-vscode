@@ -1,5 +1,10 @@
 # Changes
 
+## 0.2.7
+
+- Migrate webviews from the legacy `vscode-resource:` URI scheme to `webview.asWebviewUri()` and `webview.cspSource`
+- Bump minimum supported VS Code version to 1.38 (required by `asWebviewUri`/`cspSource`)
+
 ## 0.2.6
 
 - Drop deprecated `vscode` devDependency in favor of @types/vscode and @vscode/test-electron

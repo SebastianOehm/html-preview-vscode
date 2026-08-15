@@ -45,11 +45,13 @@ export class HTMLContentProvider {
 
 	public provideTextDocumentContent(
 		htmlDocument: vscode.TextDocument,
+		webview: vscode.Webview,
 		previewConfigurations: HTMLPreviewConfigurationManager,
 		initialLine: number | undefined = undefined,
 		state?: any
 	): string {
 		const sourceUri = htmlDocument.uri;
+		const webviewResourceUri = webview.asWebviewUri(sourceUri);
 		const config = previewConfigurations.loadAndCacheConfiguration(sourceUri);
 		const initialData = {
 			source: sourceUri.toString(),
@@ -58,14 +60,15 @@ export class HTMLContentProvider {
 			scrollPreviewWithEditor: config.scrollPreviewWithEditor,
 			scrollEditorWithPreview: config.scrollEditorWithPreview,
 			doubleClickToSwitchToEditor: config.doubleClickToSwitchToEditor,
-			disableSecurityWarnings: this.cspArbiter.shouldDisableSecurityWarnings()
+			disableSecurityWarnings: this.cspArbiter.shouldDisableSecurityWarnings(),
+			resourceOrigin: `${webviewResourceUri.scheme}://${webviewResourceUri.authority}`
 		};
 
 		this.logger.log('provideTextDocumentContent', initialData);
 
 		// Content Security Policy
 		const nonce = new Date().getTime() + '' + new Date().getMilliseconds();
-		const csp = this.getCspForResource(sourceUri, nonce);
+		const csp = this.getCspForResource(sourceUri, nonce, webview);
 
         const parsedDoc = htmlDocument.getText().split(/\r?\n/).map((l,i) => 
 			l.replace(this.TAG_RegEx, (
@@ -82,21 +85,20 @@ export class HTMLContentProvider {
 					data-settings="${JSON.stringify(initialData).replace(/"/g, '&quot;')}"
 					data-strings="${JSON.stringify(previewStrings).replace(/"/g, '&quot;')}"
 					data-state="${JSON.stringify(state || {}).replace(/"/g, '&quot;')}">
-				<script src="${this.extensionResourcePath('pre.js')}" nonce="${nonce}"></script>
-				<script src="${this.extensionResourcePath('index.js')}" nonce="${nonce}"></script>
-				${this.getStyles(sourceUri, config)}
-				<base href="${htmlDocument.uri.with({ scheme: 'vscode-resource' }).toString(true)}">`);
+				<script src="${this.extensionResourcePath('pre.js', webview)}" nonce="${nonce}"></script>
+				<script src="${this.extensionResourcePath('index.js', webview)}" nonce="${nonce}"></script>
+				${this.getStyles(sourceUri, config, webview)}
+				<base href="${webviewResourceUri.toString(true)}">`);
 		$("body").addClass(`vscode-body ${config.markEditorSelection ? 'showEditorSelection' : ''}`);
 		return $.html();
 	}
 
-	private extensionResourcePath(mediaFile: string): string {
-		return vscode.Uri.file(this.context.asAbsolutePath(path.join('media', mediaFile)))
-			.with({ scheme: 'vscode-resource' })
+	private extensionResourcePath(mediaFile: string, webview: vscode.Webview): string {
+		return webview.asWebviewUri(vscode.Uri.file(this.context.asAbsolutePath(path.join('media', mediaFile))))
 			.toString();
 	}
 
-	private fixHref(resource: vscode.Uri, href: string): string {
+	private fixHref(resource: vscode.Uri, href: string, webview: vscode.Webview): string {
 		if (!href) {
 			return href;
 		}
@@ -109,48 +111,45 @@ export class HTMLContentProvider {
 
 		// Use href as file URI if it is absolute
 		if (path.isAbsolute(href) || hrefUri.scheme === 'file') {
-			return vscode.Uri.file(href)
-				.with({ scheme: 'vscode-resource' })
+			return webview.asWebviewUri(vscode.Uri.file(href))
 				.toString();
 		}
 
 		// Use a workspace relative path if there is a workspace
 		let root = vscode.workspace.getWorkspaceFolder(resource);
 		if (root) {
-			return vscode.Uri.file(path.join(root.uri.fsPath, href))
-				.with({ scheme: 'vscode-resource' })
+			return webview.asWebviewUri(vscode.Uri.file(path.join(root.uri.fsPath, href)))
 				.toString();
 		}
 
 		// Otherwise look relative to the html file
-		return vscode.Uri.file(path.join(path.dirname(resource.fsPath), href))
-			.with({ scheme: 'vscode-resource' })
+		return webview.asWebviewUri(vscode.Uri.file(path.join(path.dirname(resource.fsPath), href)))
 			.toString();
 	}
 
-	private getStyles(resource: vscode.Uri, config: HTMLPreviewConfiguration): string {
+	private getStyles(resource: vscode.Uri, config: HTMLPreviewConfiguration, webview: vscode.Webview): string {
 		if (Array.isArray(config.styles)) {
 			return config.styles.map(style => {
-				return `<link rel="stylesheet" class="code-user-style" data-source="${style.replace(/"/g, '&quot;')}" href="${this.fixHref(resource, style)}" type="text/css" media="screen">`;
+				return `<link rel="stylesheet" class="code-user-style" data-source="${style.replace(/"/g, '&quot;')}" href="${this.fixHref(resource, style, webview)}" type="text/css" media="screen">`;
 			}).join('\n');
 		}
 		return '';
 	}
 
-	private getCspForResource(resource: vscode.Uri, nonce: string): string {
+	private getCspForResource(resource: vscode.Uri, nonce: string, webview: vscode.Webview): string {
 		switch (this.cspArbiter.getSecurityLevelForResource(resource)) {
 			case HTMLPreviewSecurityLevel.AllowInsecureContent:
-				return `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: http: https: data:; media-src vscode-resource: http: https: data:; script-src https: vscode-resource:; style-src vscode-resource: 'unsafe-inline' http: https: data:; font-src vscode-resource: http: https: data:;">`;
+				return `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} http: https: data:; media-src ${webview.cspSource} http: https: data:; script-src https: ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline' http: https: data:; font-src ${webview.cspSource} http: https: data:;">`;
 
 			case HTMLPreviewSecurityLevel.AllowInsecureLocalContent:
-				return `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https: data: http://localhost:* http://127.0.0.1:*; media-src vscode-resource: https: data: http://localhost:* http://127.0.0.1:*; script-src https: vscode-resource:; style-src vscode-resource: 'unsafe-inline' https: data: http://localhost:* http://127.0.0.1:*; font-src vscode-resource: https: data: http://localhost:* http://127.0.0.1:*;">`;
+				return `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} https: data: http://localhost:* http://127.0.0.1:*; media-src ${webview.cspSource} https: data: http://localhost:* http://127.0.0.1:*; script-src https: ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline' https: data: http://localhost:* http://127.0.0.1:*; font-src ${webview.cspSource} https: data: http://localhost:* http://127.0.0.1:*;">`;
 
 			case HTMLPreviewSecurityLevel.AllowScriptsAndAllContent:
 				return '';
 
 			case HTMLPreviewSecurityLevel.Strict:
 			default:
-				return `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https: data:; media-src vscode-resource: https: data:; script-src https: vscode-resource:; style-src vscode-resource: 'unsafe-inline' https: data:; font-src vscode-resource: https: data:;">`;
+				return `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} https: data:; media-src ${webview.cspSource} https: data:; script-src https: ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline' https: data:; font-src ${webview.cspSource} https: data:;">`;
 		}
 	}
 }

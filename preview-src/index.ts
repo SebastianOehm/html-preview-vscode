@@ -102,8 +102,9 @@ document.addEventListener('click', event => {
 			if (node.getAttribute('href').startsWith('#')) {
 				break;
 			}
-			if (node.href.startsWith('file://') || node.href.startsWith('vscode-resource:')) {
-				const [path, fragment] = node.href.replace(/^(file:\/\/|vscode-resource:)/i, '').split('#');
+			if (node.href.startsWith('file://') || node.href.startsWith(settings.resourceOrigin)) {
+				const prefix = node.href.startsWith('file://') ? 'file://' : settings.resourceOrigin;
+				const [path, fragment] = node.href.slice(prefix.length).split('#');
 				messaging.postCommand('_html.openDocumentLink', [{ path, fragment }]);
 				event.preventDefault();
 				event.stopPropagation();

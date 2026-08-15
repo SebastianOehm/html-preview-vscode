@@ -11,6 +11,7 @@ export interface PreviewSettings {
 	scrollEditorWithPreview: boolean;
 	disableSecurityWarnings: boolean;
 	doubleClickToSwitchToEditor: boolean;
+	resourceOrigin: string;
 }
 
 let cachedSettings: PreviewSettings | undefined = undefined;
