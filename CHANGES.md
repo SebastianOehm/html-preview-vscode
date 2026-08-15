@@ -1,5 +1,10 @@
 # Changes
 
+## 0.2.9
+
+- Replace tslint (archived by its maintainers in 2019) with ESLint + typescript-eslint, wired into CI
+- Minor cleanup surfaced by the new linter: removed dead config reads, `var`/`let`→`const` where safe, unnecessary regex escapes, safer `hasOwnProperty` usage
+
 ## 0.2.8
 
 - Bump cheerio from a 2018 pre-release (1.0.0-rc.2) to 1.2.0, closing the last high-severity npm audit finding in a shipped runtime dependency

@@ -41,7 +41,7 @@ export class HTMLContentProvider {
 		private readonly logger: Logger
 	) { }
 
-	private readonly TAG_RegEx = /^\s*?\<(p|h[1-6]|img|code|div|blockquote|li)((\s+.*?)(class="(.*?)")(.*?\>)|\>|\>|\/\>|\s+.*?\>)/;
+	private readonly TAG_RegEx = /^\s*?<(p|h[1-6]|img|code|div|blockquote|li)((\s+.*?)(class="(.*?)")(.*?>)|>|>|\/>|\s+.*?>)/;
 
 	public provideTextDocumentContent(
 		htmlDocument: vscode.TextDocument,
@@ -73,9 +73,9 @@ export class HTMLContentProvider {
         const parsedDoc = htmlDocument.getText().split(/\r?\n/).map((l,i) => 
 			l.replace(this.TAG_RegEx, (
 				match: string, p1: string, p2: string, p3: string, 
-				p4: string, p5: string, p6: string, offset: number) => 
+				p4: string, p5: string, p6: string, _offset: number) =>
 			typeof p5 !== "string" ? 
-			`<${p1} class="code-line" data-line="${i+1}" ${p2}` : 
+			`<${p1} class="code-line" data-line="${i+1}" ${p2}` :
 			`<${p1} ${p3} class="${p5} code-line" data-line="${i+1}" ${p6}`)
         ).join("\n");
         const $ = cheerio.load(parsedDoc);
@@ -116,7 +116,7 @@ export class HTMLContentProvider {
 		}
 
 		// Use a workspace relative path if there is a workspace
-		let root = vscode.workspace.getWorkspaceFolder(resource);
+		const root = vscode.workspace.getWorkspaceFolder(resource);
 		if (root) {
 			return webview.asWebviewUri(vscode.Uri.file(path.join(root.uri.fsPath, href)))
 				.toString();

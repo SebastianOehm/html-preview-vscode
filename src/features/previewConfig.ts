@@ -18,9 +18,7 @@ export class HTMLPreviewConfiguration {
 	public readonly styles: string[];
 
 	private constructor(resource: vscode.Uri) {
-		const editorConfig = vscode.workspace.getConfiguration('editor', resource);
 		const htmlConfig = vscode.workspace.getConfiguration('html', resource);
-		const htmlEditorConfig = vscode.workspace.getConfiguration('[html]', resource);
 
 		this.scrollPreviewWithEditor = !!htmlConfig.get<boolean>('preview.scrollPreviewWithEditor', true);
 		this.scrollEditorWithPreview = !!htmlConfig.get<boolean>('preview.scrollEditorWithPreview', true);
@@ -31,8 +29,8 @@ export class HTMLPreviewConfiguration {
 	}
 
 	public isEqualTo(otherConfig: HTMLPreviewConfiguration) {
-		for (let key in this) {
-			if (this.hasOwnProperty(key) && key !== 'styles') {
+		for (const key in this) {
+			if (Object.prototype.hasOwnProperty.call(this, key) && key !== 'styles') {
 				if (this[key] !== otherConfig[key]) {
 					return false;
 				}
