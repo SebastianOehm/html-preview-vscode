@@ -3,7 +3,7 @@ const tseslint = require('typescript-eslint');
 
 module.exports = tseslint.config(
 	{
-		ignores: ['out/**', 'media/**', 'node_modules/**', '.vscode-test/**', '*.vsix']
+		ignores: ['out/**', 'dist/**', 'media/**', 'node_modules/**', '.vscode-test/**', '*.vsix']
 	},
 	eslint.configs.recommended,
 	...tseslint.configs.recommended,
@@ -23,7 +23,7 @@ module.exports = tseslint.config(
 		}
 	},
 	{
-		files: ['eslint.config.js', 'webpack.config.js'],
+		files: ['eslint.config.js', 'webpack.preview.config.js', 'webpack.extension.config.js'],
 		languageOptions: {
 			globals: {
 				require: 'readonly',
