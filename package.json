@@ -3,20 +3,20 @@
 	"displayName": "%displayName%",
 	"description": "%description%",
 	"version": "0.2.5",
-	"publisher": "tht13",
-	"author": "Thomas Haakon Townsend",
+	"publisher": "SebastianOehm",
+	"author": "Sebastian Oehm",
 	"license": "MIT",
 	"readme": "README.md",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/tht13/html-preview-vscode"
+		"url": "https://github.com/SebastianOehm/html-preview-vscode"
 	},
 	"galleryBanner": {
 		"color": "#78d6f0",
 		"theme": "light"
 	},
-	"bugs": "https://github.com/tht13/html-preview-vscode/issues",
-	"homepage": "https://github.com/tht13/html-preview-vscode/blob/master/README.md",
+	"bugs": "https://github.com/SebastianOehm/html-preview-vscode/issues",
+	"homepage": "https://github.com/SebastianOehm/html-preview-vscode/blob/master/README.md",
 	"icon": "icon.png",
 	"main": "./out/extension.js",
 	"engines": {
