@@ -18,6 +18,7 @@ export class InMemoryDocument implements vscode.TextDocument {
 
 	isUntitled: boolean = false;
 	languageId: string = '';
+	encoding: string = 'utf8';
 	version: number = 1;
 	isDirty: boolean = false;
 	isClosed: boolean = false;

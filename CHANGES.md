@@ -1,5 +1,11 @@
 # Changes
 
+## 0.2.6
+
+- Drop deprecated `vscode` devDependency in favor of @types/vscode and @vscode/test-electron
+- Modernize build toolchain (TypeScript, webpack, ts-loader)
+- Fix Windows npm script bug and a type error surfaced by the newer TypeScript
+
 ## 0.2.5
 
 - Update version
