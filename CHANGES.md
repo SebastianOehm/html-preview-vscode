@@ -1,5 +1,10 @@
 # Changes
 
+## 0.3.0
+
+- Rename the extension identifier to `html-preview-vscode-2` — the Marketplace rejected `html-preview-vscode` as already in use
+- Rename the display name to "HTML Preview 2" — the Marketplace separately rejected "HTML Preview" as already taken
+
 ## 0.2.12
 
 - Add first real test coverage: a fast unit-test lane (mocha + ts-node, no VS Code instance needed) for the scroll-sync line-matching logic, plus integration tests (via `@vscode/test-electron`) covering extension activation and command registration, the core preview-rendering pipeline, `lazy()`, `isHTMLFile()`, the preview security-level arbiter, and preview-config change detection

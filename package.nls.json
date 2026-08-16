@@ -1,5 +1,5 @@
 {
-	"displayName": "HTML Preview",
+	"displayName": "HTML Preview 2",
 	"description": "Provides ability to preview HTML documents.",
 	"html.preview.doubleClickToSwitchToEditor.desc": "Double click in the html preview to switch to the editor.",
 	"html.preview.markEditorSelection.desc": "Mark the current editor selection in the html preview.",

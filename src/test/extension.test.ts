@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import { describe, it } from 'mocha';
 
-const EXTENSION_ID = 'SebastianOehm.html-preview-vscode';
+const EXTENSION_ID = 'SebastianOehm.html-preview-vscode-2';
 
 const EXPECTED_COMMANDS = [
 	'html.showPreview',
