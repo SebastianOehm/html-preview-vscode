@@ -17,3 +17,14 @@ webpack.extension.config.js
 .github/**
 .git/**
 .vscode-test/**
+# local AI coding assistant config
+.claude/**
+.cursor/**
+.windsurf/**
+.continue/**
+.codeium/**
+.cody/**
+.cline/**
+.roo/**
+.amazonq/**
+.aider*

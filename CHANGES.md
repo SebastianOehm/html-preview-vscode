@@ -2,8 +2,9 @@
 
 ## 0.2.12
 
-- Add first real test coverage: a fast unit-test lane (mocha + ts-node, no VS Code instance needed) for the scroll-sync line-matching logic, and an integration test confirming the extension activates and registers every command declared in `package.json`
+- Add first real test coverage: a fast unit-test lane (mocha + ts-node, no VS Code instance needed) for the scroll-sync line-matching logic, plus integration tests (via `@vscode/test-electron`) covering extension activation and command registration, the core preview-rendering pipeline, `lazy()`, `isHTMLFile()`, the preview security-level arbiter, and preview-config change detection
 - `npm test` now runs both lanes; no CI changes needed since it already just calls `npm test`
+- Register the previously-undeclared `html.styles` setting in `contributes.configuration` — it was read in code since day one but never exposed in the Settings UI or writable via the configuration API
 
 ## 0.2.11
 

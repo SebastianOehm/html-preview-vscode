@@ -3,5 +3,16 @@ node_modules
 dist/*.map
 *.vsix
 .vscode/symbols.json
+# local AI coding assistant config
+.claude/
+.cursor/
+.windsurf/
+.continue/
+.codeium/
+.cody/
+.cline/
+.roo/
+.amazonq/
+.aider*
 npm-debug.log
 .vscode-test/
