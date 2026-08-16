@@ -11,6 +11,7 @@
 	"html.showSource.title" : "Show Source",
 	"html.showPreviewSecuritySelector.title": "Change Preview Security Settings",
 	"html.trace.desc": "Enable debug logging for the html extension.",
+	"html.styles.desc": "A list of CSS stylesheets to apply to the html preview, in addition to the document's own styles.",
 	"html.preview.refresh.title": "Refresh Preview",
 	"html.preview.toggleLock.title": "Toggle Preview Locking"
 }

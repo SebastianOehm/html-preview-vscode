@@ -2,7 +2,7 @@
 	"name": "html-preview-vscode",
 	"displayName": "%displayName%",
 	"description": "%description%",
-	"version": "0.2.11",
+	"version": "0.2.12",
 	"publisher": "SebastianOehm",
 	"author": "Sebastian Oehm",
 	"license": "MIT",
@@ -220,6 +220,15 @@
 					"default": "off",
 					"description": "%html.trace.desc%",
 					"scope": "window"
+				},
+				"html.styles": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"description": "%html.styles.desc%",
+					"scope": "resource"
 				}
 			}
 		}
@@ -232,7 +241,9 @@
 		"build-preview": "webpack-cli --config webpack.preview.config.js",
 		"watch": "npx tsc -watch -p ./tsconfig.json",
 		"lint": "eslint .",
-		"test": "npm run compile && vscode-test",
+		"test:unit": "mocha --require ts-node/register \"preview-src/**/*.test.ts\"",
+		"test:integration": "npm run compile && vscode-test",
+		"test": "npm run test:unit && npm run test:integration",
 		"preversion": "npm run compile",
 		"version": "./node_modules/.bin/changes",
 		"postversion": "git push --follow-tags"
@@ -246,13 +257,15 @@
 		"@eslint/js": "^10.0.1",
 		"@studio/changes": "1.7.0",
 		"@types/lodash.throttle": "4.1.4",
-		"@types/mocha": "2.2.42",
+		"@types/mocha": "^10.0.10",
 		"@types/node": "^26.2.0",
 		"@types/vscode": "^1.38.0",
 		"@vscode/test-cli": "^0.0.15",
 		"@vscode/test-electron": "^3.1.0",
 		"eslint": "^10.8.1",
+		"mocha": "^11.8.0",
 		"ts-loader": "^9.6.2",
+		"ts-node": "^10.9.2",
 		"tslib": "^1.9.3",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.67.0",
